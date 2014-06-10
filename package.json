@@ -1,0 +1,7 @@
+{
+  "name": "JSTest",
+  "description": "Need to create a package.json so it's easier to pull in jasmine-node and run the tests",
+  "devDependencies": {
+    "jasmine-node": "^1.14.3"
+  }
+}
