@@ -1,55 +1,48 @@
 var Set = require("../set.js");
 
-describe("Given an empty set", function () {
-	var mySet;
+describe("Given an empty set when adding two new objects", function () {
+	var set;
+
 	beforeEach(function() {
-		mySet = new Set();
-	});
-	
-	it("should be empty", function () {
-		expect(mySet.count()).toBe(0);
+		set = new Set();
+		set.add("hello");
+		set.add("world cup");
 	});
 
-	it("should increment the count when adding a new object", function () {
-		mySet.add("hello");
-		expect(mySet.count()).toBe(1);
-		mySet.add("something");
-		expect(mySet.count()).toBe(2);
+	it("should hold the new objects in the set", function () {
+		expect(set.indexOf("hello")).toBe(0);
+		expect(set.indexOf("world cup")).toBe(1);
 	});
 
-	it("should hold an object which has been added", function () {
-		mySet.add("hello");
-		var value = mySet.getElementAt(0);
-		expect(value).toBe("hello");
+	it("should increment the count to two", function () {
+		expect(set.count()).toBe(2);
 	});
 
-	it("should return second object in the set", function () {
-		mySet.add("hello");
-		mySet.add("something");
-		var value = mySet.getElementAt(1);
-		expect(value).toBe("something");
+	it("should increment the count to three when adding a further object", function () {
+		set.add("alright");
+		expect(set.count()).toBe(3);
+	});
+});
+
+describe("Given an set with three objects", function () {
+	var set;
+
+	beforeEach(function () {
+		set = new Set();
+		set.add(1);
+		set.add(120);
+		set.add(453);
 	});
 
-	it("should find the index of an object in the set", function () {
-		mySet.add("hello");
-		mySet.add("this");
-		mySet.add("is");
-		mySet.add("different");
-	
-		expect(mySet.getIndexOf("is")).toBe(2);
+	it("should throw an exception if object is not in set", function () {
+		expect(function () { set.indexOf(88) }).toThrow();
 	});
 
-	it("should decrement the count when removing objects from the set", function () {
-		mySet.add("hello");
-		mySet.remove("hello");
-		expect(mySet.count()).toBe(0);
+	it("should be able to match more than one object doing a count", function () {
+		expect(set.count(function (value) { return value > 2 })).toBe(2);
 	});
 
-	it("should remove the object from the set", function () {
-		mySet.add("this");
-		mySet.add("hello");
-		mySet.add("thing");
-		mySet.remove("hello");
-		expect(mySet.getIndexOf("hello")).toBe(undefined);
-	});	
+	it("should return zero if count criteria is not met", function () {
+		expect(set.count(function (value) { return value < 1 })).toBe(0);
+	});
 });
